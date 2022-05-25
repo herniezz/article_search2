@@ -1,0 +1,8 @@
+https://www.sciencedirect.com/search?qs={query}
+https://www.jstor.org/action/doBasicSearch?Query={query}
+https://pubmed.ncbi.nlm.nih.gov/?term={query}
+https://www.ncbi.nlm.nih.gov/pmc/?term={query}
+https://onlinelibrary.wiley.com/action/doSearch?AllField={query}
+https://doaj.org/search/articles?ref=homepage-box&source={"query"%3A{"query_string"%3A{"query"%3A"{query}"%2C"default_operator"%3A"AND"}}%2C"track_total_hits"%3Atrue}
+https://link.springer.com/search?query={query}&facet-content-type=%22Article%22
+http://www.diva-portal.org/smash/resultList.jsf?dswid=7520&language=en&searchType=SIMPLE&query={query}&af=%5B%5D&aq=%5B%5B%5D%5D&aq2=%5B%5B%5D%5D&aqe=%5B%5D&noOfRows=50&sortOrder=author_sort_asc&sortOrder2=title_sort_asc&onlyFullText=false&sf=all
