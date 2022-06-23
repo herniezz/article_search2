@@ -2,11 +2,6 @@ import requests
 from bs4 import BeautifulSoup
 
 
-
-# HTMLHelper is an abstract for downloading and interpreting HTML files
-# this one is dedicated to PubMed
-# do naprawy - linki i articles
-
 class PubMedHelper:
     def __init__(self, _url):
         self.url = _url
@@ -23,33 +18,39 @@ class PubMedHelper:
 
     def get_href_value(self):
         href_value = []
-        for href in self.soup.find_all('a', class_ ="docsum-title"):
-        href_value.append("https://pubmed.ncbi.nlm.nih.gov{}".format(href.get("title")))
+        for href in self.soup.find_all('a', class_="docsum-title"):
+            href_value.append(
+                "https://pubmed.ncbi.nlm.nih.gov{}".format(href.get("href")))
 
         return href_value
 
-
-
-    def get_article_name_value(self):
+    def get_article_names_value(self):
         articles_names = []
         for article_name in self.soup.find_all('a', class_="docsum-title"):
-            articles_names.append("article_name: {}".format(article_name.getText("#text")).replace("#text", ""))
+            articles_names.append(article_name.getText().lstrip().rstrip())
 
         return articles_names
 
     def get_authors_name_value(self):
         authors_names = []
         for author in self.soup.find_all('span', class_="docsum-authors full-authors"):
-            authors_names.append(("authors_name:{}".format(author.getText("#text")).replace("#text", ""))
+            authors_names.append(author.getText("#text"))
 
         return authors_names
 
-    def get_doi_value(self):
+    def get_doi_values(self):
         doi_value = []
         for doi in self.soup.find_all('span', class_="docsum-journal-citation full-journal-citation"):
             doi_value.append("doi:{}".format(doi.getText("#text")))
 
         return doi_value
 
-
-
+    def print_results(self):
+        href_values = self.get_href_value()
+        doi_values = self.get_doi_values()
+        author_names = self.get_authors_name_value()
+        for idx, article_name in enumerate(self.get_article_names_value()):
+            print(f"\nArticle name: {article_name}")
+            print(f"Authors: {author_names[idx]}")
+            print(f"URL: {href_values[idx]}")
+            print(f"DOI: {doi_values[idx]}")

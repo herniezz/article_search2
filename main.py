@@ -4,17 +4,23 @@ from Helpers import PMCHTMLHelper
 from Helpers import SpringerHTMLHelper
 from Helpers import DiVaHTMLHelper
 
+print("Multisearch engine for articles")
+print("Please, write your keyword")
 
-print("hi there, this is a multi search engine for articles\nplease, write your keyword")
-word = "cognition" # input the word
+word = input()
+print("Please, wait...")
 
-fh = FileHelper.FileHelper("urls.txt", word)
-ph = PubMedHelper.PubMedHelper(fh.urls[2])
-phh = PMCHTMLHelper.PMCHTMLHelper(fh.urls[3])
-shh = SpringerHTMLHelper.SpringerHTMLHelper(fh.urls[6])
-dhh = DiVaHTMLHelper.DiVaHTMLHelper(fh.urls[7])
+fileHelper = FileHelper.FileHelper("urls.txt", word)
+pubMed = PubMedHelper.PubMedHelper(fileHelper.urls[2])
+pmc = PMCHTMLHelper.PMCHTMLHelper(fileHelper.urls[3])
+springer = SpringerHTMLHelper.SpringerHTMLHelper(fileHelper.urls[6])
+diva = DiVaHTMLHelper.DiVaHTMLHelper(fileHelper.urls[7])
 
-#print(phh.get_href_value())
-for idx, i in enumerate(shh.get_article_name_value()):
-    print(i)
-
+print("\n\n\n\n~~ PUBMED ~~:")
+pubMed.print_results()
+print("\n\n\n\n~~ PMC ~~:")
+pmc.print_results()
+print("\n\n\n\n~~ SPRINGER ~~:")
+springer.print_results()
+print("\n\n\n\n~~ DIVA ~~:")
+diva.print_results()

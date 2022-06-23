@@ -1,7 +1,5 @@
 import requests
 from bs4 import BeautifulSoup
-# HTMLHelper is an abstract for downloading and interpreting HTML files.
-# This one is dedicated to pmc site.
 
 
 class PMCHTMLHelper:
@@ -19,10 +17,11 @@ class PMCHTMLHelper:
 
         return htmlContent
 
-    def get_article_name_value(self):
+    def get_article_names_value(self):
         articles_names = []
         for article_name in self.soup.find_all('div', class_="title"):
-            articles_names.append(article_name.getText("#text").replace("#text", ""))
+            articles_names.append(article_name.getText(
+                "#text").replace("#text", ""))
 
         return articles_names
 
@@ -43,13 +42,24 @@ class PMCHTMLHelper:
     def get_authors_name_value(self):
         authors_names = []
         for author_name in self.soup.find_all('div', class_="desc"):
-            authors_names.append(author_name.getText("#text").replace("#text", ""))
+            authors_names.append(author_name.getText(
+                "#text").replace("#text", ""))
 
         return authors_names
 
-    def get_doi_value(self):
+    def get_doi_values(self):
         doi_arr = []
-        for doi_arr in self.soup.find_all('span', class_="doi"):
-            doi_arr.append(doi_arr.getText("#text")).replace("#text", "")
+        for doi in self.soup.find_all('span', class_="doi"):
+            doi_arr.append(doi.getText("#text").replace("#text", ""))
 
         return doi_arr
+
+    def print_results(self):
+        href_values = self.get_href_value()
+        doi_values = self.get_doi_values()
+        author_names = self.get_authors_name_value()
+        for idx, article_name in enumerate(self.get_article_names_value()):
+            print(f"\nArticle name: {article_name}")
+            print(f"Authors: {author_names[idx]}")
+            print(f"URL: {href_values[idx]}")
+            print(f"DOI: {doi_values[idx]}")

@@ -1,9 +1,6 @@
 import requests
 from bs4 import BeautifulSoup
 
-# HTMLHelper is an abstract for downloading and interpreting HTML files.
-# This one is dedicated to springer site.
-# to repair href
 
 class SpringerHTMLHelper:
     def __init__(self, _url):
@@ -19,23 +16,32 @@ class SpringerHTMLHelper:
 
         return htmlContent
 
-    def get_article_name_value(self):
+    def get_article_names_value(self):
         articles_names = []
         for article_name in self.soup.find_all('a', class_="title"):
-            articles_names.append(article_name.getText("#text").replace("#text", ""))
+            articles_names.append(article_name.getText(
+                "#text").replace("#text", ""))
 
         return articles_names
 
     def get_href_value(self):
         href_value = []
         for href in self.soup.find_all('a', class_="title"):
-            href_value.append("https://link.springer.com/search?query={}".format(href.get("title")))
+            href_value.append(
+                "https://link.springer.com{}".format(href.get("href")))
 
         return href_value
 
     def get_authors_name_value(self):
         authors_names = []
         for author_name in self.soup.find_all('a', class_="authors"):
-            authors_names.append(author_name.getText("#text").replace("#text", "").strip())
+            authors_names.append(author_name.getText(
+                "#text").replace("#text", "").strip())
 
         return authors_names
+
+    def print_results(self):
+        href_values = self.get_href_value()
+        for idx, article_name in enumerate(self.get_article_names_value()):
+            print(f"\nArticle name: {article_name}")
+            print(f"URL: {href_values[idx]}")

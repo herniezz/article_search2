@@ -1,4 +1,4 @@
-# Article class is an abstract to save information about one article
+ # Article class is an abstract to save information about one article
 
 class Article:
     def __init__(self, _name, _author, _doi, _url, _download):
